@@ -1,0 +1,43 @@
+body {
+  background-color:#003E4C;
+  color:#fff;
+  margin:0;
+  padding:0;
+  font-family:sans-serif;
+}
+
+#wrapper {
+  background-color:#fff;
+  color:#000;
+  width:95%;
+  margin:auto;
+}
+
+#header {
+  background-color:#007F9C;
+  color:#fff;
+}
+
+#content {
+  padding:5px;
+}
+
+div.input label {
+  display:block;
+  float:left;
+  width:100px;
+  padding-right:4px;
+}
+
+div.input div.input {
+  padding-left:100px;
+}
+
+div.input span.invalid > input {
+  background-color:#fee;
+}
+
+div.input span.valid {
+  background-color:#efe;
+  padding:3px 18px 3px 3px;
+}
