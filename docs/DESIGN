@@ -1,0 +1,45 @@
+This document is aimed at explaining the design and use cases of the project.
+
+First, some use cases. The user experience should be *exactly as described*.
+No extraneous steps such as requiring a user to do mundane administrivia
+like entering a user's card into the database when all they really want to do
+is check someone in.
+
+1) Resident Tom wants to sign in their guest Jack. CA Mike takes Tom and Jack's
+ID cards, scans them one at a time, and the system says its all good.
+
+2) Tom now wants to sign out Jack. CA Mike asks Tom for the room number and
+guest name. He enters in "Jack" and "304" in the app, and Jack is now
+signed out.
+
+3) Resident Tom wants to sign in their guest Bob, who doesn't have a student
+ID. Mike scans Tom's ID, then Bob's ID. GuestTracker tells Mike that Bob
+doesn't exist in the database, so Mike needs to enter Bob's contact phone
+number. After typing it in and clicking submit, Bob is now signed in under Tom.
+
+4) RA Chris caught those troublemakers on the 3rd floor drinking again. He
+informs the residence administration, who login to GuestTracker. They enter
+their IDs and click "ban". Next time Mike tries to sign them in, GuestTracker
+denies them and shows a note about their drinking habits.
+
+5) RA Chris is about to do his rounds for the day. He logs into GuestTracker
+and looks through his list of bookmarked troublemakers to see if they are
+signed in. He'll use this to visit their resident's floors to see if they're
+causing too much trouble.
+
+Now for some technical design stuff. Specifically, the database structure.
+
+Each user in the system is represented by a Person. Each building in the
+system has its own Building entry as well. Each person has a set of
+Identifications, which is what gets searched when searching for an ID number.
+A Resident entry is basically a link between a Person, their student ID
+(in the form of an Identification), and their building. Whenever someone
+gets checked in, an Entry is created. An Entry links a Resident with a
+Person, along with the timestamps of checkin/checkout. The final important data
+element is a Ban, which links together a person, a building, expiration,
+creation, and a reason.
+
+User logins are not implemented yet. The way they should be though, is with
+a combination of various authentication plugins and CakePHP's ACL system. This
+will allow someone setting up GuestTracker to use any kind of authentication
+backend (LDAP, ActiveDirectory, MySQL, PAM) to perform logins.
