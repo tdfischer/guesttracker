@@ -17,13 +17,15 @@ Finder.Base = Class.create({
     this.error.hide();
     this.newItem.hide();
 
+    Event.observe(this.editor, 'keypress', this.captureEnter.bindAsEventListener(this));
     new Form.Element.Observer(this.editor, 1, this.verify.bind(this));
   },
 
   editData: function() {
     this.display.replace(this.editor);
     this.editor.activate();
-    new Form.Element.Observer(this.editor, 1, this.verify.bind(this));
+    Event.observe(this.editor, 'keypress', this.captureEnter.bindAsEventListener(this));
+    new Form.Element.Observer(this.editor, 3, this.verify.bind(this));
   },
 
   showData: function(data) {
@@ -38,7 +40,7 @@ Finder.Base = Class.create({
       this.span.addClassName('invalid');
       params = { };
       params[this.param] = this.editor.value;
-      new Ajax.Updater(this. newItem, this.newUrl, {parameters: params, onSuccess: this.newItem.show.bind(this.newItem)});
+      new Ajax.Updater(this.newItem, this.newUrl, {parameters: params, onSuccess: this.newItem.show.bind(this.newItem)});
     }
   },
 
@@ -70,6 +72,13 @@ Finder.Base = Class.create({
     });
   },
 
+  captureEnter: function(event, input) {
+    if (event.keyCode == 13) {
+       Event.stop(event);
+       this.verify(input, $F(input));
+    }
+  },
+
   handleData: function(data) {},
 });
 
@@ -95,4 +104,3 @@ Finder.Card = Class.create(Finder.Base, {
   searchUrl: '/identifications/search'
 
 });
-
