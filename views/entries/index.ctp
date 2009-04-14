@@ -1,8 +1,4 @@
-<?php echo $form->create();?>
-<?php echo $widgets->cardInput('Resident.card_num',array('label'=>'Resident'));?>
-<?php echo $widgets->cardInput('Guest.card_num',array('label'=>'Guest'));?>
-<input type="submit" value="Ok"/>
-<?php echo $form->end();?>
+<?php echo $this->element('checkin');?>
 
 <h2>Old Guests</h2>
 <table>
