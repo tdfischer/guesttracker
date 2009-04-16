@@ -16,14 +16,23 @@ echo $scripts_for_layout;
 </head>
 <body>
 <div id="wrapper">
-<div id="header">
-<h1>GuestTracker</h1>
-</div>
-<div id="content">
-<h2><?php echo $title_for_layout;?></h2>
-<div id="messages"><?php $session->flash();?></div>
-<?php echo $content_for_layout;?>
-</div>
+    <div id="header">
+        <h1>GuestTracker</h1>
+        <div id="epicenter">
+            <div id="username">Fischer, Trever</div>
+            <select id="locationPicker" name="location">
+            <option>Exchange St. Residence Hall</option>
+            <option>Administration</option>
+            </select>
+            <a href="#" id="logout">Logout</a><br />
+            <a href="#" id="inbox">Inbox: 0</a>
+        </div>
+    </div>
+    <div id="content">
+        <h2><?php echo $title_for_layout;?></h2>
+        <div id="messages"><?php $session->flash();?></div>
+        <?php echo $content_for_layout;?>
+    </div>
 </div>
 </body>
 </html>
