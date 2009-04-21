@@ -40,5 +40,5 @@
  * $controllerPaths = array('this path to controllers', 'second full path to controllers', 'etc...');
  *
  */
-//EOF
+Configure::write('userBackendModel', 'DbUser');
 ?>
