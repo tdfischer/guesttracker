@@ -37,11 +37,15 @@ Finder.Base = Class.create({
       this.span.addClassName('valid');
       Event.observe(this.display, 'click', this.editData.bind(this));
     } else {
+      this.showNewForm();
+    }
+  },
+
+  showNewForm: function() {
       this.span.addClassName('invalid');
       params = { };
       params[this.param] = this.editor.value;
       new Ajax.Updater(this.newItem, this.newUrl, {parameters: params, onSuccess: this.newItem.show.bind(this.newItem)});
-    }
   },
 
   showError: function(input, value) {
@@ -91,6 +95,21 @@ Finder.Person = Class.create(Finder.Base, {
   param: 'data[Person][name]',
   newUrl: '/people/add',
   searchUrl: '/people/search'
+});
+
+Finder.ResidentCard = Class.create(Finder.base, {
+    handleData: function(data) {
+        this.value.value = data.Person.firstName+' '+data.Person.lastName;
+        this.display.update(this.value.value);
+    },
+
+    showNewForm: function() {
+        this.error.update("Card not found.");
+    },
+
+    param: 'data[Identification][card_num]',
+    newUrl: '/residents/add',
+    searchUrl: '/residents/search'
 });
 
 Finder.Card = Class.create(Finder.Base, {
