@@ -60,3 +60,14 @@ div.input span.valid {
   background-color:#efe;
   padding:3px 18px 3px 3px;
 }
+
+#checkin {
+    float:left;
+    width:50%;
+    height:100%;
+}
+
+#entry-search {
+    width:50%;
+    float:right;
+}
