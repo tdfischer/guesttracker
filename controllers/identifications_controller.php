@@ -1,7 +1,7 @@
 <?php
 class IdentificationsController extends AppController {
   var $scaffold;
-  var $components = array('RequestHandler');
+  var $components = array('RequestHandler', 'Auth', 'Acl');
   var $helpers = array('Ajax', 'Javascript', 'Form');
 
   public function view($id) {

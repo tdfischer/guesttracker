@@ -2,7 +2,7 @@
 class EntriesController extends AppController {
   var $scaffold;
   var $helpers = array('Ajax', 'Javascript', 'Widgets');
-  var $components = array('Session');
+  var $components = array('Session', 'Auth', 'Acl');
   var $uses = array('Entry', 'Ban', 'Identification');
   
   public function create() {
