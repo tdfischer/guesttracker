@@ -21,6 +21,12 @@
 
 class PeopleController extends AppController {
   var $scaffold;
+  var $paginate = array(
+      'limit' => 10,
+      'order' => array(
+        'Entry.id' => 'desc'
+      )
+      );
 
   public function add() {
     $this->Person->save($this->data);
@@ -32,6 +38,11 @@ class PeopleController extends AppController {
     $firstName = $this->data['Person']['firstName'];
     $lastName = $this->data['Person']['lastName'];
     $this->set('people', $this->Person->find('all', array('conditions' => array( 'Person.firstName LIKE' => $firstName.'%', 'Person.lastName LIKE' => $lastName.'%'))));
+  }
+
+  public function view($id) {
+    $this->set('Person', $this->Person->findById($id));
+    $this->set('data', $this->paginate('Entry', array('Person.id LIKE' => $id.'%')));
   }
 }
 ?>
