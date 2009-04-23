@@ -1,5 +1,9 @@
 <?php
-class DbUser extends AppModel {
-    var $table = 'users';
+App::import('Model', 'UserBase');
+
+class DbUser extends UserBase {
+    var $useTable = 'users';
+    var $hasAndBelongsToMany = array('Group');
+    var $recursive = 1;
 }
 ?>

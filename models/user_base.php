@@ -1,0 +1,5 @@
+<?
+class UserBase extends AppModel {
+
+}
+?>
