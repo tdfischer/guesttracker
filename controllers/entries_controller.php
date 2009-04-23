@@ -35,7 +35,7 @@ class EntriesController extends AppController {
         $this->data['Entry']['resident_id'] = $resident['Resident']['id'];
         foreach($this->data['Guest'] as $guest) {
             $guest = $this->Identification->findByCardNum($guest['card_num']);
-            $oldentry = $this->Entry->find(array('person_id'=>$guest['Person']['id'], 'valid'=>'Y'));
+            $oldentry = $this->Entry->find(array('person_id'=>$guest['Person']['id'], 'active'=>'1'));
             if ($oldentry) {
                 $old[] = $guest;
             } elseif ($guest) {
