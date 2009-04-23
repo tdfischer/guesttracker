@@ -1,7 +1,7 @@
 <?php
 class Identification extends AppModel {
     var $hasOne = array('Resident');
-    var $belongsTo = 'Person';
+    var $belongsTo = array('Person', 'Cardtype');
     var $displayField = 'card_num';
     var $uses = array('Person');
     var $recursive = 1;

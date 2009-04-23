@@ -37,10 +37,11 @@ class AppController extends Controller {
   function isAuthorized() {
     $user = $this->Auth->user();
     $aco = 'ROOT/controllers/'.$this->Auth->action();
+    $controllerAco = 'ROOT/controllers/'.$this->Auth->action(':controller');
     if ($user) {
         $user = $this->User->findById($user['User']['id']);
         foreach($user['Group'] as $group) {
-            if ($this->Acl->check(array('model'=>'Group', 'foreign_key'=>$group['id']), $aco)) {
+   if ($this->Acl->check(array('model'=>'Group', 'foreign_key'=>$group['id']), $controllerAco) || $this->Acl->check(array('model'=>'Group', 'foreign_key'=>$group['id']), $aco)) {
                 $this->Auth->allow();
                 return true;
             }
