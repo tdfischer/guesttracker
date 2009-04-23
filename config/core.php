@@ -38,7 +38,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 2);
+	Configure::write('debug', 1);
 /**
  * Application wide charset encoding
  */
@@ -64,7 +64,7 @@
  * 'admin' 		-> admin_index() and /admin/controller/index
  * 'superuser' -> superuser_index() and /superuser/controller/index
  */
-	//Configure::write('Routing.admin', 'admin');
+	Configure::write('Routing.admin', 'admin');
 
 /**
  * Turn off all caching application-wide.
