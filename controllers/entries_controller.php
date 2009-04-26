@@ -75,29 +75,58 @@ class EntriesController extends AppController {
   }
   
   public function search() {
-    $name = explode(' ', $this->data['Resident']['name'],2);
-    $firstName = '%'.$name[0].'%';
-    if (count($name) == 1)
-        $name[1] = $name[0];
-    $lastName = '%'.$name[1].'%';
-    $name = explode(' ', $this->data['Guest']['name'], 2);
-    $guestFirstName = '%'.$name[0].'%';
-    if (count($name) == 1)
-        $name[1] = $name[0];
-    $guestLastName = '%'.$name[1].'%';
-    $this->set('results', $this->Entry->findAll(array('or'=>array('Identification.card_num'=>$this->data['Resident']['card_num'], 'Identification.card_num' => $this->data['Guest']['card_num']), 'or'=>array('or'=>array('Person.firstName LIKE'=>$firstName, 'Person.lastName LIKE' => $lastName), 'or'=>array('Person.firstName LIKE'=>$guestFirstName, 'Person.lastName LIKE'=>$guestLastName)), 'Resident.room' => $this->data['Resident']['room'])));
-    
-    /*$residentMatches = array();
-    foreach($residents as $resident) {
-      $residentMatches = array_merge($residentMatches, $this->Resident->findAll(array('Identification.person_id' => $resident['Person']['id'])));
+    $search = array();
+
+    $resident = array();
+    if (!empty($this->data['Resident']['name'])) {
+        $name = explode(' ', $this->data['Resident']['name'],2);
+        if (count($name)==2) {
+        $firstName = '%'.$name[0].'%';
+        if (count($name) == 1)
+            $name[1] = $name[0];
+        $lastName = '%'.$name[1].'%';
+        $resident = $this->Identification->find(array('Person.firstName LIKE'=>$firstName, 'Person.lastName LIKE'=>$lastName));
+        } else {
+            $resident = $this->Identification->find(array('or'=>array('Person.firstName LIKE'=>'%'.$this->data['Resident']['name'].'%', 'Person.lastName LIKE'=>'%'.$this->data['Resident']['name'].'%')));
+        }
     }
-    $this->set('Residents', $residentMatches);
-    $this->set('RoomResidents', $this->Resident->findAllByRoom($this->data['Resident']['room']));
-    $this->set('GuestById', $this->Identification->findAll(array('card_num'=>$this->data['Guest']['card_num'])));
-    list($firstName, $lastName) = explode(' ', $this->data['Guest']['name']);
-    $firstName = '%'.$firstName.'%';
-    $lastname = '%'.$lastName.'%';
-    $this->set('Guests', $this->Person->findAll(array('firstName LIKE'=>$firstName, 'lastName LIKE'=>$lastName)));*/
+
+    $guest = array();
+    if (!empty($this->data['Guest']['name'])) {
+        $name = explode(' ', $this->data['Guest']['name'], 2);
+        if (count($name)==2) {
+            $firstName = '%'.$name[0].'%';
+            if (count($name) == 1)
+                $name[1] = $name[0];
+            $firstName = '%'.$name[1].'%';
+            $guest = $this->Identification->find(array('Person.firstName LIKE'=>$firstName, 'Person.lastName LIKE'=>$firstName));
+        } else {
+            $guest = $this->Identification->find(array('or' => array('Person.firstName LIKE'=>'%'.$this->data['Guest']['name'].'%', 'Person.lastName LIKE'=>'%'.$this->data['Guest']['name'].'%')));
+        }
+    }
+    
+    if (!empty($resident))
+        $search[] = array('Entry.resident_id' => $resident['Resident']['id']);
+    if (!empty($guest))
+        $search[] = array('Entry.person_id' => $guest['Person']['id']);
+
+    $resident = $this->Identification->find(array('Identification.card_num' => $this->data['Resident']['card_num']));
+    $guest = $this->Identification->find(array('Identification.card_num' => $this->data['Guest']['card_num']));
+    
+    if (!empty($guest))
+        $search[] = array('Entry.person_id' => $guest['Person']['id']);
+    if (!empty($resident))
+        $search[] = array('Entry.resident_id' => $resident['Resident']['id']);
+
+
+    if (!empty($this->data['Resident']['room']))
+        $search[] = array('Resident.room' => $this->data['Resident']['room']);
+
+    debug($search);
+    if (empty($search))
+        $this->set('results', array());
+    else
+        $this->set('results', $this->Entry->findAll($search));
   }
   
   public function index() {
