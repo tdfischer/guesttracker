@@ -1,0 +1,46 @@
+This file contains the list of features and bugs currently in progress or
+consideration. If you are currently working on a task, add your name to it.
+
+GuestTracker is currently still a student project for a grade, so these
+entries are still needed to get the full grade:
+
+* Use Bans
+	Bans are currently not used when checking in a person.
+* Help Docs - trever
+	A complete help system stored in the database, with translations
+	possible.
+* Check out entries
+	Checking out a guest should be at most a search for their name
+	and a click on a 'checkout' link.
+* Admin pages
+	* ACLs
+	* Groups
+	* Residents
+	* Bans
+	* Card types
+	* Various settings
+* REST interface
+	A REST interface would make a fat GUI client easily possible
+
+The rest of these things need to be done before the first release (1.0):
+
+* AJAX search widget
+* View methods - adam
+	* Building
+	* Entry
+	* Message
+* MOTD
+* Building::viewRoom method
+* AJAX checkin widget
+* Pagination
+* Shell jobs
+	* Checkout old entries (configurable)
+* Quick resident verification
+
+These items should be in a future release:
+
+* Equipment/computer lab key checkout
+* Messaging system
+	* Thread-like view
+* Scheduling
+	* iCal export
