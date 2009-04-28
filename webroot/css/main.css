@@ -47,14 +47,11 @@ div.input {
 }
 
 div.input label {
+  text-align:right;
   display:block;
   float:left;
-  width:150px;
+  width:25%;
   padding-right:4px;
-}
-
-div.checkbox label {
-    width:250px;
 }
 
 div.input div.input {
@@ -81,3 +78,26 @@ div.input span.valid {
     float:right;
 }
 
+div.sidebar {
+  float:left;
+  width:300px;
+  background-color:#003E4C;
+  
+}
+
+div.sidebar ul {
+  margin-left:0;
+  list-style:none;
+}
+
+div.sidebar li {
+  margin-left:0;
+}
+
+div.sidebar a:link, div.sidebar a:visited {
+  color:#fff;
+}
+
+textarea {
+  width:70%;
+}
