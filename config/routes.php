@@ -35,6 +35,7 @@
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */
+	Router::connect('/help/:action/*', array('controller' => 'help_pages'));
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 	Router::parseExtensions('json');
 ?>
