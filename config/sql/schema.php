@@ -1,6 +1,6 @@
 <?php 
 /* SVN FILE: $Id$ */
-/* App schema generated on: 2009-04-23 12:04:52 : 1240515832*/
+/* App schema generated on: 2009-04-28 14:04:52 : 1240953892*/
 class AppSchema extends CakeSchema {
 	var $name = 'App';
 
@@ -78,6 +78,15 @@ class AppSchema extends CakeSchema {
 		'group_id' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 10),
 		'user_id' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 10),
 		'indexes' => array()
+	);
+	var $help_pages = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 5, 'key' => 'primary'),
+		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 5, 'key' => 'index'),
+		'title' => array('type' => 'string', 'null' => false),
+		'content' => array('type' => 'text', 'null' => false, 'key' => 'index'),
+		'lft' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 5, 'key' => 'index'),
+		'rght' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 5, 'key' => 'index'),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'sibling' => array('column' => 'lft', 'unique' => 0), 'firstChild' => array('column' => 'rght', 'unique' => 0), 'parent_id' => array('column' => 'parent_id', 'unique' => 0), 'content' => array('column' => 'content', 'unique' => 0))
 	);
 	var $identifications = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 15, 'key' => 'primary'),
