@@ -41,15 +41,24 @@ body {
   padding:5px;
 }
 
+div.input {
+    clear:both;
+    padding: 3px;
+}
+
 div.input label {
   display:block;
   float:left;
-  width:100px;
+  width:150px;
   padding-right:4px;
 }
 
+div.checkbox label {
+    width:250px;
+}
+
 div.input div.input {
-  padding-left:100px;
+  padding-left:150px;
 }
 
 div.input span.invalid > input {
@@ -71,3 +80,4 @@ div.input span.valid {
     width:50%;
     float:right;
 }
+

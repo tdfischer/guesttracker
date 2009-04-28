@@ -25,9 +25,20 @@ class EntriesController extends AppController {
   var $components = array('Session', 'Auth', 'Acl');
   var $uses = array('Entry', 'Ban', 'Identification');
   
+  public function checkout($id) {
+    $entry = $this->Entry->findById($id);
+    if ($entry) {
+      $entry['Entry']['active'] = 0;
+      $this->Entry->save($entry);
+      $this->Session->setFlash("Checked out {$entry['Person']['firstName']} {$entry['Person']['lastName']}");
+    } else {
+      $this->Session->setFlash("Could not check out.");
+    }
+    $this->redirect("/");
+  }
+  
   public function create() {
     $resident = $this->Identification->findByCardNum($this->data['Resident']['card_num']);
-    //debug($resident);
     if (!empty($resident['Resident'])) {
         $valid = array();
         $invalid = array();
@@ -48,6 +59,7 @@ class EntriesController extends AppController {
                 $invalid[] = $guest['card_num'];
             }
         }
+        ///TODO: Change these into generic AppController::error methods?
         if (!empty($old))
             $this->Session->setFlash(__('Guest(s) already checked in elsewhere', true), 'checkin-old', array('old'=>$old), 'checkin-old');
         if (!empty($valid))
@@ -61,17 +73,7 @@ class EntriesController extends AppController {
             ///FIXME: Translatable
             $this->Session->setFlash($resident['Person']['firstName'].' '.$resident['Person']['lastName'].' is not a resident.');
     }
-    //debug($this->data['Guest']);
     $this->redirect("/");
-    /*$resident = $this->Identification->findByCardNum($this->data['Resident']['card_num']);
-    $guest = $this->Identification->findByCardNum($this->data['Guest']['card_num']);
-    $this->data['Entry']['person_id'] = $guest['Person']['id'];
-    $this->data['Entry']['resident_id'] = $resident['Resident']['id'];
-    if ($this->Entry->save($this->data))
-      $this->Session->setFlash('Checked in!');
-    else
-      $this->Session->setFlash('Failed to check in.');
-    $this->redirect("/");*/
   }
   
   public function search() {
@@ -122,7 +124,9 @@ class EntriesController extends AppController {
     if (!empty($this->data['Resident']['room']))
         $search[] = array('Resident.room' => $this->data['Resident']['room']);
 
-    debug($search);
+    if (empty($this->data['Search']['showInactive']))
+        $search[] = array('Entry.active' => '1');
+
     if (empty($search))
         $this->set('results', array());
     else
