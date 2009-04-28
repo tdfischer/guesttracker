@@ -31,6 +31,7 @@ echo $scripts_for_layout;
 	<br style="clear:both;"/>
     </div>
     <div id="content">
+        <div id="breadcrumb"><?php print $html->getCrumbs();?></div>
         <h2><?php echo $title_for_layout;?></h2>
         <div id="messages"><?php $session->flash();?></div>
         <?php echo $content_for_layout;?>

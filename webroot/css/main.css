@@ -41,15 +41,21 @@ body {
   padding:5px;
 }
 
+div.input {
+    clear:both;
+    padding: 3px;
+}
+
 div.input label {
+  text-align:right;
   display:block;
   float:left;
-  width:100px;
+  width:25%;
   padding-right:4px;
 }
 
 div.input div.input {
-  padding-left:100px;
+  padding-left:150px;
 }
 
 div.input span.invalid > input {
@@ -70,4 +76,28 @@ div.input span.valid {
 #entry-search {
     width:50%;
     float:right;
+}
+
+div.sidebar {
+  float:left;
+  width:300px;
+  background-color:#003E4C;
+  
+}
+
+div.sidebar ul {
+  margin-left:0;
+  list-style:none;
+}
+
+div.sidebar li {
+  margin-left:0;
+}
+
+div.sidebar a:link, div.sidebar a:visited {
+  color:#fff;
+}
+
+textarea {
+  width:70%;
 }
